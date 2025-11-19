@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Kendi Brand Colors */
+    --old-rose: 18 24% 69%;
+    --gold: 45 63% 52%;
+    --soft-pink: 0 50% 90%;
+    --accent-gray: 0 0% 93%;
+    
+    /* Semantic Tokens */
+    --background: 0 50% 98%;
+    --foreground: 18 24% 25%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 18 24% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 18 24% 25%;
+
+    --primary: 18 24% 69%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 50% 90%;
+    --secondary-foreground: 18 24% 25%;
+
+    --muted: 0 0% 93%;
+    --muted-foreground: 18 24% 50%;
+
+    --accent: 45 63% 52%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 50% 90%;
+    --input: 0 0% 93%;
+    --ring: 18 24% 69%;
+
+    --radius: 1rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(18 24% 69%), hsl(0 50% 90%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 50% 98%), hsl(0 50% 90%));
+    
+    /* Shadows */
+    --shadow-elegant: 0 4px 24px -4px hsl(18 24% 69% / 0.15);
+    --shadow-card: 0 2px 12px -2px hsl(18 24% 69% / 0.1);
+    
+    /* Transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 18 24% 25%;
+    --sidebar-primary: 18 24% 69%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 50% 90%;
+    --sidebar-accent-foreground: 18 24% 25%;
+    --sidebar-border: 0 50% 90%;
+    --sidebar-ring: 18 24% 69%;
+  }
+
+  .dark {
+    --background: 18 24% 15%;
+    --foreground: 0 50% 98%;
+
+    --card: 18 24% 18%;
+    --card-foreground: 0 50% 98%;
+
+    --popover: 18 24% 18%;
+    --popover-foreground: 0 50% 98%;
+
+    --primary: 18 24% 69%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 18 24% 25%;
+    --secondary-foreground: 0 50% 98%;
+
+    --muted: 18 24% 25%;
+    --muted-foreground: 0 50% 70%;
+
+    --accent: 45 63% 52%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 50% 98%;
+
+    --border: 18 24% 25%;
+    --input: 18 24% 25%;
+    --ring: 18 24% 69%;
+    
+    --sidebar-background: 18 24% 15%;
+    --sidebar-foreground: 0 50% 98%;
+    --sidebar-primary: 18 24% 69%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 18 24% 25%;
+    --sidebar-accent-foreground: 0 50% 98%;
+    --sidebar-border: 18 24% 25%;
+    --sidebar-ring: 18 24% 69%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+  
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+}
