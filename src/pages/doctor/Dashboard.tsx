@@ -212,7 +212,7 @@ export default function Dashboard() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="font-playfair text-4xl md:text-5xl font-bold text-foreground mb-2">
-                Welcome back, Dr. M. Dela Cruz!
+                Welcome back!
               </h1>
               <p className="font-poppins text-muted-foreground">
                 Here's what's happening at your clinic today
