@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Calendar, Users, FileText, BarChart3, User, LogOut, Menu, X } from "lucide-react";
+import { Calendar, Users, FileText, BarChart3, LogOut, Menu, X } from "lucide-react";
 import logo from "@/assets/kendi-logo.png";
 
 interface DashboardLayoutProps {
@@ -21,7 +21,6 @@ export const DashboardLayout = ({ children }: DashboardLayoutProps) => {
     { icon: Users, label: "Patients", path: "/patients" },
     { icon: FileText, label: "Prescriptions", path: "/prescriptions" },
     { icon: BarChart3, label: "Reports", path: "/reports" },
-    { icon: User, label: "Profile", path: "/profile" },
   ];
 
   const handleLogout = () => {

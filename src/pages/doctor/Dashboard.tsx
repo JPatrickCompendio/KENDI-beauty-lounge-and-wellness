@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calendar, Users, FileText, BarChart3, User, LogOut, Menu, X, TrendingUp, DollarSign, Clock, Activity, Sparkles, Heart, Star, ArrowUpRight, ArrowDownRight } from "lucide-react";
+import { Calendar, Users, FileText, BarChart3, LogOut, Menu, X, TrendingUp, DollarSign, Clock, Activity, Sparkles, Heart, Star, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import logo from "@/assets/kendi-logo.png";
 import { DashboardLayout } from "@/pages/doctor/DashboardLayout";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -19,7 +19,6 @@ export default function Dashboard() {
     { icon: Users, label: "Patients", path: "/patients" },
     { icon: FileText, label: "Prescriptions", path: "/prescriptions" },
     { icon: BarChart3, label: "Reports", path: "/reports" },
-    { icon: User, label: "Profile", path: "/profile" },
   ];
 
   const stats = [
