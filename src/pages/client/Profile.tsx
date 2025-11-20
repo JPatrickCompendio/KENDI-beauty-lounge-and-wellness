@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { User, Mail, Phone, MapPin, Lock, Upload, Info } from "lucide-react";
+import { User, Mail, Phone, MapPin, Lock, Upload, Info, Calendar, Heart } from "lucide-react";
 import { toast } from "sonner";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
@@ -32,7 +32,7 @@ export default function Profile() {
                 <div className="flex flex-col md:flex-row md:items-end gap-6 -mt-12">
                   <div className="relative">
                     <Avatar className="h-24 w-24 ring-4 ring-background">
-                      <AvatarFallback className="bg-[#ab817a] text-white text-2xl font-playfair">MD</AvatarFallback>
+                      <AvatarFallback className="bg-[#ab817a] text-white text-2xl font-playfair">MS</AvatarFallback>
                     </Avatar>
                     <Button size="icon" variant="secondary" className="absolute -right-2 bottom-0 h-8 w-8 rounded-full shadow" aria-label="Upload photo">
                       <Upload className="h-4 w-4" />
@@ -59,8 +59,8 @@ export default function Profile() {
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="text-center">
-                  <h2 className="font-playfair text-2xl font-bold text-foreground mb-1">Dr. M. Dela Cruz</h2>
-                  <p className="font-poppins text-sm text-muted-foreground">Aesthetician / Doctor</p>
+                  <h2 className="font-playfair text-2xl font-bold text-foreground mb-1">Maria Santos</h2>
+                  <p className="font-poppins text-sm text-muted-foreground">Patient</p>
                 </div>
 
                 <Separator className="my-6" />
@@ -68,7 +68,7 @@ export default function Profile() {
                 <div className="space-y-3">
                   <div className="flex items-center text-sm">
                     <Mail className="h-4 w-4 mr-2 text-muted-foreground" />
-                    <span className="font-poppins text-muted-foreground">dr.delacruz@kendiwellness.com</span>
+                    <span className="font-poppins text-muted-foreground">maria.santos@email.com</span>
                   </div>
                   <div className="flex items-center text-sm">
                     <Phone className="h-4 w-4 mr-2 text-muted-foreground" />
@@ -77,6 +77,10 @@ export default function Profile() {
                   <div className="flex items-center text-sm">
                     <MapPin className="h-4 w-4 mr-2 text-muted-foreground" />
                     <span className="font-poppins text-muted-foreground">Baliuag, Bulacan</span>
+                  </div>
+                  <div className="flex items-center text-sm">
+                    <Calendar className="h-4 w-4 mr-2 text-muted-foreground" />
+                    <span className="font-poppins text-muted-foreground">Date of Birth: Jan 15, 1990</span>
                   </div>
                 </div>
               </CardContent>
@@ -101,7 +105,7 @@ export default function Profile() {
                       <Label htmlFor="lastName" className="font-poppins">Last Name</Label>
                       <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input id="lastName" defaultValue="Dela Cruz" className="font-poppins pl-9" />
+                        <Input id="lastName" defaultValue="Santos" className="font-poppins pl-9" />
                       </div>
                     </div>
                   </div>
@@ -111,7 +115,7 @@ export default function Profile() {
                       <Label htmlFor="email" className="font-poppins">Email Address</Label>
                       <div className="relative">
                         <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        <Input id="email" type="email" defaultValue="dr.delacruz@kendiwellness.com" className="font-poppins pl-9" />
+                        <Input id="email" type="email" defaultValue="maria.santos@email.com" className="font-poppins pl-9" />
                       </div>
                     </div>
                     <div className="space-y-2">
@@ -125,12 +129,18 @@ export default function Profile() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label htmlFor="role" className="font-poppins">Role</Label>
-                      <Input id="role" defaultValue="Aesthetician / Doctor" disabled className="font-poppins" />
+                      <Label htmlFor="dateOfBirth" className="font-poppins">Date of Birth</Label>
+                      <div className="relative">
+                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input id="dateOfBirth" type="date" defaultValue="1990-01-15" className="font-poppins pl-9" />
+                      </div>
                     </div>
                     <div className="space-y-2">
-                      <Label htmlFor="license" className="font-poppins">License Number</Label>
-                      <Input id="license" defaultValue="12345678" className="font-poppins" />
+                      <Label htmlFor="gender" className="font-poppins">Gender</Label>
+                      <div className="relative">
+                        <Heart className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input id="gender" defaultValue="Female" className="font-poppins pl-9" />
+                      </div>
                     </div>
                   </div>
 

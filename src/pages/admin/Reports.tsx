@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { Download } from "lucide-react";
+import { Download, FileText, Calendar } from "lucide-react";
 import { ExportReportModal } from "@/components/ExportReportModal";
 import { AdminLayout } from "@/components/AdminLayout";
 
@@ -84,10 +87,70 @@ const feedbackRatings = {
   ],
 };
 
+// Example comprehensive report data by month and year
+const generateReportData = (branch: "Baliuag" | "Malolos", month?: string, year?: string) => {
+  const baseData = {
+    appointments: [
+      { id: "APT-001", patient: "Maria Santos", service: "Facial Rejuvenation", date: "2025-01-15", time: "10:00 AM", amount: 2500, status: "Completed", doctor: "Dr. M. Dela Cruz" },
+      { id: "APT-002", patient: "John Reyes", service: "Gluta Drip", date: "2025-01-16", time: "2:00 PM", amount: 3500, status: "Completed", doctor: "Dr. J. Reyes" },
+      { id: "APT-003", patient: "Sofia Garcia", service: "Body Contouring", date: "2025-01-18", time: "11:00 AM", amount: 5000, status: "Completed", doctor: "Dr. A. Santos" },
+      { id: "APT-004", patient: "Luis Hernandez", service: "Botox & Fillers", date: "2025-01-20", time: "3:00 PM", amount: 8000, status: "Completed", doctor: "Dr. R. Flores" },
+      { id: "APT-005", patient: "Patricia Ong", service: "Hydra Facial", date: "2025-01-22", time: "9:00 AM", amount: 1199, status: "Completed", doctor: "Nurse A. Santos" },
+      { id: "APT-006", patient: "Angela Cruz", service: "Slimming Treatment", date: "2025-01-25", time: "1:00 PM", amount: 4000, status: "Completed", doctor: "Dr. M. Dela Cruz" },
+      { id: "APT-007", patient: "David Lee", service: "Carbon Laser Facial", date: "2025-01-28", time: "4:00 PM", amount: 1399, status: "Completed", doctor: "Nurse L. Cruz" },
+    ],
+    services: [
+      { name: "Facial Rejuvenation", count: 45, revenue: 112500, avgRating: 4.8 },
+      { name: "Gluta Drip", count: 38, revenue: 133000, avgRating: 4.9 },
+      { name: "Body Contouring", count: 32, revenue: 160000, avgRating: 4.7 },
+      { name: "Botox & Fillers", count: 28, revenue: 224000, avgRating: 4.8 },
+      { name: "Hydra Facial", count: 52, revenue: 62348, avgRating: 4.6 },
+      { name: "Slimming Treatment", count: 41, revenue: 164000, avgRating: 4.7 },
+    ],
+    staff: [
+      { name: "Dr. M. Dela Cruz", appointments: 85, revenue: 212500, rating: 4.8 },
+      { name: "Dr. J. Reyes", appointments: 72, revenue: 252000, rating: 4.9 },
+      { name: "Dr. A. Santos", appointments: 68, revenue: 340000, rating: 4.7 },
+      { name: "Dr. R. Flores", appointments: 55, revenue: 440000, rating: 4.8 },
+      { name: "Nurse A. Santos", appointments: 95, revenue: 113905, rating: 4.6 },
+      { name: "Nurse L. Cruz", appointments: 78, revenue: 109122, rating: 4.7 },
+    ],
+    payments: [
+      { id: "PAY-001", appointment: "APT-001", patient: "Maria Santos", amount: 2500, method: "Cash", date: "2025-01-15", status: "Paid" },
+      { id: "PAY-002", appointment: "APT-002", patient: "John Reyes", amount: 3500, method: "GCash", date: "2025-01-16", status: "Paid" },
+      { id: "PAY-003", appointment: "APT-003", patient: "Sofia Garcia", amount: 5000, method: "Credit Card", date: "2025-01-18", status: "Paid" },
+      { id: "PAY-004", appointment: "APT-004", patient: "Luis Hernandez", amount: 8000, method: "Bank Transfer", date: "2025-01-20", status: "Paid" },
+      { id: "PAY-005", appointment: "APT-005", patient: "Patricia Ong", amount: 1199, method: "Cash", date: "2025-01-22", status: "Paid" },
+    ],
+    summary: {
+      totalAppointments: 340,
+      totalRevenue: 756475,
+      totalPatients: 287,
+      averageRating: 4.75,
+      topService: "Hydra Facial",
+      topStaff: "Nurse A. Santos"
+    }
+  };
+
+  // Filter by month/year if provided
+  let filteredData = { ...baseData };
+  if (month || year) {
+    // In a real app, this would filter actual data
+    // For prototype, we'll just return the base data
+    filteredData = baseData;
+  }
+
+  return filteredData;
+};
+
 export default function Reports() {
   const [branch, setBranch] = useState<"Baliuag" | "Malolos">("Baliuag");
   const [exportModalOpen, setExportModalOpen] = useState(false);
   const [reportType, setReportType] = useState("");
+  const [generateReportModalOpen, setGenerateReportModalOpen] = useState(false);
+  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedYear, setSelectedYear] = useState("");
+  const [generatedReport, setGeneratedReport] = useState<any>(null);
 
   const currentIncomeData = incomeData[branch];
   const currentAppointmentData = appointmentData[branch];
@@ -129,20 +192,41 @@ export default function Reports() {
     }
   };
 
+  const handleGenerateReport = () => {
+    const reportData = generateReportData(branch, selectedMonth, selectedYear);
+    setGeneratedReport(reportData);
+  };
+
+  const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+  const years = ["2025", "2024", "2023"];
+
   return (
     <AdminLayout>
       <div className="p-8 space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-4xl font-heading font-bold">Reports & Analytics</h1>
-        <Select value={branch} onValueChange={(v) => setBranch(v as "Baliuag" | "Malolos")}>
-          <SelectTrigger className="w-[180px]">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="Baliuag">Baliuag Branch</SelectItem>
-            <SelectItem value="Malolos">Malolos Branch</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-4">
+          <Button 
+            onClick={() => setGenerateReportModalOpen(true)}
+            className="bg-[#ab817a] hover:bg-[#ba9993] text-white"
+          >
+            <FileText className="h-4 w-4 mr-2" />
+            Generate Report
+          </Button>
+          <Select value={branch} onValueChange={(v) => setBranch(v as "Baliuag" | "Malolos")}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Baliuag">Baliuag Branch</SelectItem>
+              <SelectItem value="Malolos">Malolos Branch</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -286,6 +370,261 @@ export default function Reports() {
         data={getExportData()}
         totals={reportType === "income" ? { total_income: `₱${totalIncome.toLocaleString()}` } : undefined}
       />
+
+      {/* Generate Report Modal */}
+      <Dialog open={generateReportModalOpen} onOpenChange={setGenerateReportModalOpen}>
+        <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-heading flex items-center gap-2">
+              <FileText className="h-6 w-6" />
+              Generate Comprehensive Report
+            </DialogTitle>
+            <DialogDescription>
+              Filter and generate a detailed report by selecting month and/or year
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6 py-4">
+            {/* Filter Section */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 p-4 bg-secondary/30 rounded-lg">
+              <div className="space-y-2">
+                <Label htmlFor="month" className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  Filter by Month
+                </Label>
+                <Select value={selectedMonth || "all"} onValueChange={(value) => setSelectedMonth(value === "all" ? "" : value)}>
+                  <SelectTrigger id="month">
+                    <SelectValue placeholder="Select month (optional)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Months</SelectItem>
+                    {months.map((month) => (
+                      <SelectItem key={month} value={month}>
+                        {month}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="year" className="flex items-center gap-2">
+                  <Calendar className="h-4 w-4" />
+                  Filter by Year
+                </Label>
+                <Select value={selectedYear || "all"} onValueChange={(value) => setSelectedYear(value === "all" ? "" : value)}>
+                  <SelectTrigger id="year">
+                    <SelectValue placeholder="Select year (optional)" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Years</SelectItem>
+                    {years.map((year) => (
+                      <SelectItem key={year} value={year}>
+                        {year}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex items-end">
+                <Button 
+                  onClick={handleGenerateReport}
+                  className="w-full bg-[#ab817a] hover:bg-[#ba9993] text-white"
+                >
+                  <FileText className="h-4 w-4 mr-2" />
+                  Generate Report
+                </Button>
+              </div>
+            </div>
+
+            {/* Generated Report Display */}
+            {generatedReport && (
+              <div className="space-y-6">
+                {/* Summary Cards */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <Card className="p-4">
+                    <p className="text-sm text-muted-foreground">Total Appointments</p>
+                    <p className="text-2xl font-bold text-primary">{generatedReport.summary.totalAppointments}</p>
+                  </Card>
+                  <Card className="p-4">
+                    <p className="text-sm text-muted-foreground">Total Revenue</p>
+                    <p className="text-2xl font-bold text-gold">₱{generatedReport.summary.totalRevenue.toLocaleString()}</p>
+                  </Card>
+                  <Card className="p-4">
+                    <p className="text-sm text-muted-foreground">Total Patients</p>
+                    <p className="text-2xl font-bold">{generatedReport.summary.totalPatients}</p>
+                  </Card>
+                  <Card className="p-4">
+                    <p className="text-sm text-muted-foreground">Average Rating</p>
+                    <p className="text-2xl font-bold">{generatedReport.summary.averageRating}/5.0</p>
+                  </Card>
+                </div>
+
+                {/* Appointments Table */}
+                <Card>
+                  <div className="p-4 border-b">
+                    <h3 className="text-lg font-semibold">Appointments</h3>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>ID</TableHead>
+                          <TableHead>Patient</TableHead>
+                          <TableHead>Service</TableHead>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Time</TableHead>
+                          <TableHead>Amount</TableHead>
+                          <TableHead>Doctor</TableHead>
+                          <TableHead>Status</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {generatedReport.appointments.map((apt: any) => (
+                          <TableRow key={apt.id}>
+                            <TableCell className="font-medium">{apt.id}</TableCell>
+                            <TableCell>{apt.patient}</TableCell>
+                            <TableCell>{apt.service}</TableCell>
+                            <TableCell>{apt.date}</TableCell>
+                            <TableCell>{apt.time}</TableCell>
+                            <TableCell>₱{apt.amount.toLocaleString()}</TableCell>
+                            <TableCell>{apt.doctor}</TableCell>
+                            <TableCell>
+                              <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
+                                {apt.status}
+                              </span>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </Card>
+
+                {/* Services Performance */}
+                <Card>
+                  <div className="p-4 border-b">
+                    <h3 className="text-lg font-semibold">Services Performance</h3>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Service Name</TableHead>
+                          <TableHead>Count</TableHead>
+                          <TableHead>Revenue</TableHead>
+                          <TableHead>Avg Rating</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {generatedReport.services.map((service: any, idx: number) => (
+                          <TableRow key={idx}>
+                            <TableCell className="font-medium">{service.name}</TableCell>
+                            <TableCell>{service.count}</TableCell>
+                            <TableCell>₱{service.revenue.toLocaleString()}</TableCell>
+                            <TableCell>{service.avgRating}/5.0</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </Card>
+
+                {/* Staff Performance */}
+                <Card>
+                  <div className="p-4 border-b">
+                    <h3 className="text-lg font-semibold">Staff Performance</h3>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Staff Name</TableHead>
+                          <TableHead>Appointments</TableHead>
+                          <TableHead>Revenue</TableHead>
+                          <TableHead>Rating</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {generatedReport.staff.map((staff: any, idx: number) => (
+                          <TableRow key={idx}>
+                            <TableCell className="font-medium">{staff.name}</TableCell>
+                            <TableCell>{staff.appointments}</TableCell>
+                            <TableCell>₱{staff.revenue.toLocaleString()}</TableCell>
+                            <TableCell>{staff.rating}/5.0</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </Card>
+
+                {/* Payments */}
+                <Card>
+                  <div className="p-4 border-b">
+                    <h3 className="text-lg font-semibold">Payment Records</h3>
+                  </div>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Payment ID</TableHead>
+                          <TableHead>Appointment</TableHead>
+                          <TableHead>Patient</TableHead>
+                          <TableHead>Amount</TableHead>
+                          <TableHead>Method</TableHead>
+                          <TableHead>Date</TableHead>
+                          <TableHead>Status</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {generatedReport.payments.map((payment: any) => (
+                          <TableRow key={payment.id}>
+                            <TableCell className="font-medium">{payment.id}</TableCell>
+                            <TableCell>{payment.appointment}</TableCell>
+                            <TableCell>{payment.patient}</TableCell>
+                            <TableCell>₱{payment.amount.toLocaleString()}</TableCell>
+                            <TableCell>{payment.method}</TableCell>
+                            <TableCell>{payment.date}</TableCell>
+                            <TableCell>
+                              <span className="px-2 py-1 rounded-full text-xs bg-green-100 text-green-700">
+                                {payment.status}
+                              </span>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </Card>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button variant="outline" onClick={() => {
+              setGenerateReportModalOpen(false);
+              setGeneratedReport(null);
+              setSelectedMonth("");
+              setSelectedYear("");
+            }}>
+              Close
+            </Button>
+            {generatedReport && (
+              <Button 
+                onClick={() => {
+                  // Export functionality can be added here
+                  setExportModalOpen(true);
+                  setReportType("comprehensive");
+                }}
+                className="bg-[#ab817a] hover:bg-[#ba9993] text-white"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Export Report
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       </div>
     </AdminLayout>
   );

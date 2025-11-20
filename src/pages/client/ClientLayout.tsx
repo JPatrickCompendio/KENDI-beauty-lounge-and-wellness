@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Calendar, Users, FileText, BarChart3, User, LogOut, Menu, X, Home, Stethoscope } from "lucide-react";
+import { Calendar, Users, FileText, BarChart3, User, LogOut, Menu, X, Home, Stethoscope, Sparkles } from "lucide-react";
 import logo from "@/assets/kendi-logo.png";
 import { Header } from "@/pages/landing pages/Header";
 import { Footer } from "@/pages/client/Footer";
@@ -21,6 +21,7 @@ export const ClientLayout = ({ children }: ClientLayoutProps) => {
     { icon: BarChart3, label: "Dashboard", path: "/client/dashboard" },
     { icon: Calendar, label: "Appointments", path: "/client/appointments" },
     { icon: FileText, label: "Appointment History", path: "/client/appointment-history" },
+    { icon: Sparkles, label: "Services", path: "/client/services" },
     { icon: User, label: "Profile", path: "/client/profile" },
     { icon: BarChart3, label: "Contact", path: "/client/contact" },
   ];
