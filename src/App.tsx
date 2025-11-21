@@ -14,6 +14,7 @@ import ClientAbout from "./pages/landing pages/About";
 import ClientContact from "./pages/client/Contact";
 import AdminDashboard from "./pages/admin/Dashboard";
 import AdminClients from "./pages/admin/Clients";
+import AdminBookPatient from "./pages/admin/BookPatient";
 import AdminStaff from "./pages/admin/Staff";
 import AdminServices from "./pages/admin/Services";
 import AdminPayments from "./pages/admin/Payments";
@@ -59,6 +60,7 @@ const App = () => (
           {/* Admin Routes */}
           <Route path="/pages/Dashboard" element={<AdminDashboard />} />
           <Route path="/pages/Clients" element={<AdminClients />} />
+          <Route path="/pages/BookPatient" element={<AdminBookPatient />} />
           <Route path="/pages/Staff" element={<AdminStaff />} />
           <Route path="/pages/Services" element={<AdminServices />} />
           <Route path="/pages/Payments" element={<AdminPayments />} />

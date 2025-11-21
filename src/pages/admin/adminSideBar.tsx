@@ -10,6 +10,7 @@ import {
   Settings,
   Package,
   LogOut,
+  Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -17,6 +18,7 @@ import { useState } from "react";
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", path: "/pages/Dashboard" },
   { icon: Users, label: "Clients", path: "/pages/Clients" },
+  { icon: Calendar, label: "Book Patient", path: "/pages/BookPatient" },
   { icon: Stethoscope, label: "Doctors & Staff", path: "/pages/Staff" },
   { icon: Sparkles, label: "Services", path: "/pages/Services" },
   { icon: CreditCard, label: "Payments", path: "/pages/Payments" },
